@@ -1,7 +1,41 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 function DashboardStatsGrid() {
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('http://192.168.1.7:8089/dash/summary')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        return response.json();
+      })
+      .then((responseData) => {
+        setData(responseData);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  console.log("data correct",data)
+
+
     return (
         <div className="flex gap-4 w-full">
+            
             <BoxWrapper>
                 <div className="rounded-full h-12 w-12 flex items-center justify-center bg-green-500">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-2xl text-white">
@@ -13,7 +47,7 @@ function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light">Total Trips</span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-gray-700 font-semibold">12</strong>
+                        <strong className="text-xl text-gray-700 font-semibold">{data.totalTrips}</strong>
                         <span></span>
                     </div>
                 </div>
@@ -27,7 +61,7 @@ function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light">Total Drivers</span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-gray-700 font-semibold">10</strong>
+                        <strong className="text-xl text-gray-700 font-semibold">{data.totalVehicles}</strong>
                         <span></span>
                     </div>
                 </div>
@@ -41,9 +75,9 @@ function DashboardStatsGrid() {
                     </svg>
                 </div>
                 <div className="pl-4">
-                    <span className="text-sm text-gray-500 font-light">Total Vehicle</span>
+                    <span className="text-sm text-gray-500 font-light">Total Vehicles</span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-gray-700 font-semibold">17</strong>
+                        <strong className="text-xl text-gray-700 font-semibold">{data.totalDrivers}</strong>
                         <span></span>
                     </div>
                 </div>
@@ -59,3 +93,4 @@ function BoxWrapper({ children }) {
     return <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center">{children}</div>
 
 }
+

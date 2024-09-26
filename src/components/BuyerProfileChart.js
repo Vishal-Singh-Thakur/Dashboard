@@ -1,66 +1,79 @@
-import React, {useState, useEffect} from 'react'
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from 'recharts';
-const data = [
-    { name: 'Female', value: 243 },
-    { name: 'Male', value: 434 },
-    { name: 'Other', value: 320 }
+// import React from 'react';
 
-]
+// export default function BuyerProfileChart({ availableStorage = 300, usedStorage = 100 }) {
+//     const total = availableStorage + usedStorage;
 
-const RADIAN = Math.PI / 180
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28']
+//     // Calculate the percentages and angles for each segment
+//     const availablePercentage = (availableStorage / total) * 100;
+//     const usedPercentage = (usedStorage / total) * 100;
 
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5
-    const x = cx + radius * Math.cos(-midAngle * RADIAN)
-    const y = cy + radius * Math.sin(-midAngle * RADIAN)
+//     // SVG circle parameters
+//     const radius = 100;
+//     const circumference = 2 * Math.PI * radius;
+//     const availableStrokeDasharray = `${(availableStorage / total) * circumference} ${circumference}`;
+//     const usedStrokeDasharray = `${(usedStorage / total) * circumference} ${circumference}`;
 
-    return (
-        <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-            {`${(percent * 100).toFixed(0)}%`}
-        </text>
-    )
-}
+//     return (
+//         <div className="border border-gray-300 bg-gray-50 p-4 lg:p-7 rounded-lg">
+//             {/* Header */}
+//             <div>
+//                 <h3 className="text-cyan-900 text-base font-semibold sm:text-lg">Storage Usage</h3>
+//             </div>
 
-function BuyerProfileChart() {
+//             {/* Chart Container */}
+//             <div className="h-[300px] w-full sm:py-3">
+//                 <div className="relative w-full h-full flex items-center justify-center">
+//                     {/* Pie Chart with SVG */}
+//                     <svg width="300" height="300" viewBox="0 0 300 300">
+//                         {/* Background Circle */}
+//                         <circle
+//                             cx="150"
+//                             cy="150"
+//                             r={radius}
+//                             stroke="#BFDBFE"
+//                             strokeWidth="30"
+//                             fill="none"
+//                         />
+//                         {/* Available Storage Circle */}
+//                         <circle
+//                             cx="150"
+//                             cy="150"
+//                             r={radius}
+//                             stroke="#164E63"
+//                             strokeWidth="30"
+//                             strokeDasharray={availableStrokeDasharray}
+//                             strokeDashoffset="0"
+//                             fill="none"
+//                             transform="rotate(-90 150 150)"
+//                         />
+//                         <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize="36">
+//                             {Math.round(usedPercentage)}%
+//                         </text>
+//                     </svg>
+//                 </div>
+//             </div>
 
-    const [data, setData]=useState([])
-    useEffect(() => {
-        fetch('http://192.168.1.7:8089/pie/find').then((result)=>{
-            result.json().then((resp)=>{
-                // console.log("result",resp)
-                setData(resp)
-            })
-        }) 
-    },[])
-
-
-    return (
-        <div className="w-[20rem] h-[22rem] bg-white p-4 rounded-sm border border-gray-200 flex flex-col">
-            <strong className="text-gray-700 font-medium">Trip Chart</strong>
-            <div className="w-full mt-3 flex-1 rext-xs">
-                <ResponsiveContainer width="100%" height="100%">
-                    <PieChart width={400} height={300}>
-                        <Pie
-                            data={data}
-                            cx="50%"
-                            cy="45%"
-                            labelLine={false}
-                            label={renderCustomizedLabel}
-                            outerRadius={105}
-                            fill="#8884d8"
-                            dataKey="value"
-                        >
-                            {data.map((_, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
-                        <Legend />
-                    </PieChart>
-                </ResponsiveContainer>
-            </div>
-        </div>
-    )
-}
-
-export default BuyerProfileChart;
+//             {/* Details Section */}
+//             <div>
+//                 <div className="mb-4 flex items-center justify-between border-b border-gray-300 pb-4">
+//                     <div className="flex items-center">
+//                         <span className="me-2 h-2 w-2 rounded-full bg-blue-200"></span>
+//                         <span className="font-lexend text-sm font-medium text-gray-900 dark:text-gray-400">
+//                             Available storage
+//                         </span>
+//                     </div>
+//                     <span className="font-normal">{Math.round(availablePercentage)}%</span>
+//                 </div>
+//                 <div className="mb-4 flex items-center justify-between border-b border-gray-300 pb-4">
+//                     <div className="flex items-center">
+//                         <span className="me-2 h-2 w-2 rounded-full bg-cyan-900"></span>
+//                         <span className="font-lexend text-sm font-medium text-gray-900 dark:text-gray-400">
+//                             Total used storage
+//                         </span>
+//                     </div>
+//                     <span className="font-normal">{Math.round(usedPercentage)}%</span>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }

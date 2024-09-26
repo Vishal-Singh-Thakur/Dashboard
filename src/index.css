@@ -1,4 +1,4 @@
-@import url("http://fonts.googleapis.com/css2?family=inter:wght@300;400;500;600;700&display=swap");
+@import url('http://fonts.googleapis.com/css2?family=inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -22,6 +22,63 @@
         @apply font-semibold;
     }
     a {
-        @apply text-sky-500 hover:underline; 
+        @apply text-sky-500 hover:underline;
     }
+}
+
+.react-datepicker {
+    @apply shadow-lg border-gray-100 rounded-md;
+}
+
+.react-datepicker__navigation {
+    @apply items-baseline;
+}
+
+.react-datepicker__navigation--previous {
+    @apply top-7 border border-solid border-gray-300 rounded-md h-[22px] w-[22px];
+}
+
+.react-datepicker__navigation--next {
+    @apply top-7 border border-solid border-gray-300 rounded-md h-[22px] w-[22px];
+}
+
+.react-datepicker__navigation-icon {
+    @apply top-0;
+}
+
+.react-datepicker__navigation-icon--previous::before {
+    @apply border-t-[1.5px] border-r-[1.5px] border-gray-400 h-[7px] w-[7px];
+}
+
+.react-datepicker__navigation-icon--next::before {
+    @apply border-t-[1.5px] border-r-[1.5px] border-gray-400 h-[7px] w-[7px];
+}
+
+.react-datepicker__header {
+    @apply pt-5 pb-3;
+}
+
+.react-datepicker__year-wrapper {
+    @apply flex flex-wrap justify-center;
+}
+
+.react-datepicker__year-text {
+    @apply px-2 py-1 hover:bg-gray-100 rounded;
+}
+
+.react-datepicker__year-text--selected {
+    @apply bg-blue-500 text-white;
+}
+
+.react-datepicker__year-text--today {
+    @apply border border-blue-500;
+}
+
+.sidebar {
+    transition: transform 0.3s ease;
+    transform: translateX(-100%); /* Hide by default */
+}
+
+.sidebar.open {
+    transform: translateX(0); /* Show */
 }

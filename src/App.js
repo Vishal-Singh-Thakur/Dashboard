@@ -1,17 +1,27 @@
-import { Route, Routes } from "react-router-dom";
-import Layout from "./components/shared/Layout";
-import DashBoard from "./components/DashBoard";
-import Wallet from "./components/Wallet";
+import { useEffect, useState } from 'react'
+import Login from './components/login'
+import Layout from './components/shared/Layout'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import SignUp from './components/signup'
 
 function App() {
-  return (
-    <Routes>
-      <Route path='/' element={<Layout />}>
-        <Route index element={<DashBoard />} />
-        <Route path='/products' element={<Wallet />} />
-      </Route>
-      <Route path='/login' element={<div>this is login page</div>} />
-    </Routes>
-  )
+    const [user, setUser] = useState(false)
+
+    useEffect(() => {
+        const authenticated = localStorage.getItem('isAuthenticated')
+        if (authenticated === 'true') {
+            setUser(true)
+        } else {
+            setUser(false)
+        }
+    }, [])
+
+    return (
+        <Routes>
+            <Route path="/" element={user ? <Layout /> : <Navigate to="/login" />} />
+            <Route path="/login" element={<Login setUser={setUser} />} />
+            <Route path="/signup" element={<SignUp />} />
+        </Routes>
+    )
 }
-export default App;
+export default App

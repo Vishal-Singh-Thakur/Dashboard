@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FaRupeeSign } from 'react-icons/fa' // Rupee icon
+import { FaRupeeSign } from 'react-icons/fa'
 
 export default function Wallet() {
     // State for managing deposit amount and UPI ID
